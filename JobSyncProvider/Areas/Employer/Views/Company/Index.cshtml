@@ -1,0 +1,58 @@
+﻿@model IEnumerable<JobSyncProvider.Models.Company>
+
+@{
+	ViewData["Title"] = "Company List";
+}
+
+<div class="container">
+	<div class="card p-3 rounded border shadow">
+
+		<h1>Company List</h1>
+
+		<div class="d-flex justify-content-between align-items-center">
+			<!-- Create Button -->
+			<p class="mb-0">
+				<a class="btn btn-primary d-inline-block" asp-action="Create">Create New</a>
+			</p>
+
+			<!-- Filter dropdown for status -->
+			<div>
+				<label for="statusFilter" class="mr-5">Filter Status:</label>
+				<select id="statusFilter" class="form-select d-inline-block" style="width:195px; cursor:pointer;">
+					<option value="All">All</option>
+					<option value="Active">Active</option>
+					<option value="Inactive">Inactive</option>
+				</select>
+			</div>
+
+		</div>
+
+@* 		<div class="table-sm"> *@
+			<table id="tblData" class="table table-hover">
+				<thead>
+					<tr>
+						<th>
+							@Html.DisplayNameFor(model => model.Name)
+						</th>
+						<th>
+							@Html.DisplayNameFor(model => model.Website)
+						</th>
+						<th>
+							@Html.DisplayNameFor(model => model.IsActive)
+						</th>
+						<th>Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					<!-- Using Datatable / jQuery -->
+				</tbody>
+			</table>
+@* 		</div> *@
+	</div>
+</div>
+
+@section Scripts{
+
+	<script src="~/js/company.js"></script>
+
+}

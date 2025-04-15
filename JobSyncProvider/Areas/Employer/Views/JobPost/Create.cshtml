@@ -1,0 +1,94 @@
+﻿@model JobSyncProvider.Models.JobPost
+
+@{
+	ViewData["Title"] = "Create Job Post";
+}
+
+<div class="container my-5">
+	<div class="card p-3 rounded border shadow">
+		<h1>Job Posting</h1>
+		<h2>Create New Post</h2>
+
+		<br />
+		<hr />
+
+		<form method="post">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<div class="row">
+
+				<div class="form-group col-lg-9 col-12">
+					<label asp-for="Title" class="control-label"></label>
+					<input asp-for="Title" class="form-control" autofocus />
+					<span asp-validation-for="Title" class="text-danger"></span>
+				</div>
+
+				<div class="form-group col-lg-3 col-12">
+					<label asp-for="CategoryId" class="control-label"></label>
+					<select asp-for="Title" class="form-select">
+						<option value="" selected disabled>-- Work Setup --</option>
+						<option value="On-Site">On-Site</option>
+						<option value="Hybrid">Hybrid</option>
+						<option value="Remote">Remote</option>
+					</select>
+					<span asp-validation-for="Title" class="text-danger"></span>
+				</div>
+
+			</div>
+
+			<div class="row">
+				<div class="form-group col-lg-3 col-12">
+					<label asp-for="Title" class="control-label"></label>
+					<select asp-for="Title" class="form-select">
+						<option value="" selected disabled>-- Work Type --</option>
+						<option value="Full-Time">Full-Time</option>
+						<option value="Part-Time">Part-Time</option>
+						<option value="Project">Project</option>
+					</select>
+					<span asp-validation-for="Title" class="text-danger"></span>
+				</div>
+
+				<div class="form-group col-lg-6 col-12">
+					<label asp-for="CategoryId" class="control-label"></label>
+					<select asp-for="CategoryId" class="form-select" asp-items="ViewBag.CategoryId">
+						<option value="" selected disabled>-- Category --</option>
+					</select>
+				</div>
+				<div class="form-group col-lg-3 col-12">
+					<label asp-for="Salary" class="control-label"></label>
+					<input asp-for="Salary" class="form-control" />
+					<span asp-validation-for="Salary" class="text-danger"></span>
+				</div>
+
+			</div>
+
+			<div class="form-group">
+				<label asp-for="Location" class="control-label"></label>
+				<textarea asp-for="Location" class="form-control"></textarea>
+				<span asp-validation-for="Location" class="text-danger"></span>
+			</div>
+
+			<div class="form-group">
+				<label asp-for="Description" class="control-label"></label>
+				<textarea asp-for="Description" class="form-control" style="height:300px;"></textarea>
+				<span asp-validation-for="Description" class="text-danger"></span>
+			</div>
+
+
+		
+
+			<div class="form-group mt-4 mb-3">
+
+				<input type="submit" value="Submit" class="btn btn-success" />
+
+				<a class="btn btn-dark" asp-action="Index">Back to List</a>
+			</div>
+
+		</form>
+	</div>
+</div>
+
+@section Scripts {
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+}

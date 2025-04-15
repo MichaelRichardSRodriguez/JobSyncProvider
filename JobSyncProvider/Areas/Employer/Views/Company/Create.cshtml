@@ -1,0 +1,102 @@
+﻿@model JobSyncProvider.Models.Company
+
+@{
+	ViewData["Title"] = "Create Company";
+}
+
+<div class="container my-2">
+	<div class="card p-3 rounded border shadow">
+		<h1>Company Profile</h1>
+		<h2>Create New Profile</h2>
+
+		<br />
+		<hr />
+
+		<form method="post" enctype="multipart/form-data">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<div class="row flex-row-reverse">
+				<div class="col-12 col-lg-8">
+					<div class="form-floating mb-3">
+						<input asp-for="Name" class="form-control" placeholder="Company Name" autofocus>
+						<label asp-for="Name">Name</label>
+						<span asp-validation-for="Name" class="text-danger"></span>
+					</div>
+					<div class="row">
+						<div class="col-md-3 col-12">
+							<div class="form-floating mb-3">
+								<input asp-for="FoundedYear" class="form-control" placeholder="FoundedYear">
+								<label asp-for="FoundedYear">Founded Year</label>
+								<span asp-validation-for="FoundedYear" class="text-danger"></span>
+							</div>
+						</div>
+						<div class="col-md-9 col-12">
+							<div class="form-floating mb-3">
+								<input asp-for="Website" class="form-control" placeholder="www.MyCompanyWebsite.com.ph">
+								<label asp-for="Website">Website</label>
+								<span asp-validation-for="Website" class="text-danger"></span>
+							</div>
+						</div>
+					</div>
+					<div class="form-floating mb-3">
+						<textarea asp-for="Location" class="form-control" placeholder="Enter Address" style="height: 130px"></textarea>
+						<label asp-for="Location">Location</label>
+						<span asp-validation-for="Location" class="text-danger"></span>
+					</div>
+					<div class="form-floating mb-3">
+						<textarea asp-for="Description" class="form-control" placeholder="Leave a description here" style="height: 250px"></textarea>
+						<label asp-for="Description">Description</label>
+						<span asp-validation-for="Description" class="text-danger"></span>
+					</div>
+				</div>
+
+				<div class="col-12 col-lg-4">
+					<div class="form-group">
+						<img id="image-preview" src="https://placehold.co/500x400/png" class="card-img-top rounded border-5 w-100" alt="Upload a Logo" />
+						<label class="control-label m-2 w-100 text-center text-primary">Click "Choose File" to upload logo</label>
+						<input type="file" asp-for="LogoUrl" name="file" class="form-control mt-2" accept="image/*" onchange="displayImage(event)" />
+						<span asp-validation-for="LogoUrl" class="text-danger"></span>
+					</div>
+					<div class="form-group mt-4 mb-3">
+
+						<input type="submit" value="Submit" class="btn btn-success col-md-4 col-lg-5 col-12 mb-1 ms-1" />
+
+						@if (User.IsInRole("Employer"))
+						{
+							<a class="btn btn-dark col-md-4 col-lg-5 col-12 mb-1 ms-1" asp-area="Guest" asp-Controller="Home" asp-action="Index">Home</a>
+						}
+						else
+						{
+							<a class="btn btn-dark col-md-4 col-lg-5 col-12 mb-1 ms-1" asp-action="Index">Back to List</a>
+						}
+					</div>
+				</div>
+
+			</div>
+
+		</form>
+	</div>
+</div>
+
+<script>
+	function displayImage(event) {
+		const file = event.target.files[0]; // Get the selected file
+		const reader = new FileReader(); // Create a FileReader instance
+
+		reader.onload = function (e) {
+			// When the file is read, update the image's src attribute
+			const imagePreview = document.getElementById('image-preview');
+			imagePreview.src = e.target.result; // Set the image source to the result of FileReader
+			imagePreview.style.display = 'block'; // Display the image
+		}
+
+		if (file) {
+			reader.readAsDataURL(file); // Read the image as a Data URL
+		}
+	}
+</script>
+
+@section Scripts {
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+}

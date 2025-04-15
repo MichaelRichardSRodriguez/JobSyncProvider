@@ -1,0 +1,105 @@
+﻿@model JobSyncProvider.Models.Category
+
+@{
+	ViewData["Title"] = "Category Details";
+}
+
+<div class="container col-lg-7 col-md-10 col-sm-12">
+	<div class="card p-3 rounded border shadow">
+		<h1>Category Details</h1>
+
+		<div>
+			<hr />
+			<dl class="row">
+				<dt class="col-lg-4 col-md-4 col-sm-12">
+					@Html.DisplayNameFor(model => model.Name)
+				</dt>
+				<dd class="col-lg-8 col-md-8 col-12">
+					@Html.DisplayFor(model => model.Name)
+				</dd>
+				<dt class="col-lg-4 col-md-4 col-12">
+					@Html.DisplayNameFor(model => model.DateCreated)
+				</dt>
+				<dd class="col-lg-8 col-md-8 col-12">
+					@Html.DisplayFor(model => model.DateCreated)
+				</dd>
+				<dt class="col-lg-4 col-md-4 col-12">
+					@Html.DisplayNameFor(model => model.CreatedByUser)
+				</dt>
+				<dd class="col-lg-8 col-md-8 col-12">
+					@Html.DisplayFor(model => model.CreatedByUser.FullName)
+				</dd>
+				@if (Model.DateUpdated != null)
+				{
+					<dt class="col-lg-4 col-md-4 col-12">
+						@Html.DisplayNameFor(model => model.DateUpdated)
+					</dt>
+					<dd class="col-lg-8 col-md-8 col-12">
+						@Html.DisplayFor(model => model.DateUpdated)
+					</dd>
+					<dt class="col-lg-4 col-md-4 col-12">
+						@Html.DisplayNameFor(model => model.ModifiedByUser)
+					</dt>
+					<dd class="col-lg-8 col-md-8 col-sm-12">
+						@Html.DisplayFor(model => model.ModifiedByUser.FullName)
+					</dd>
+				}
+@* 				<dt class="col-lg-4 col-md-4 col-12">
+					@Html.DisplayNameFor(model => model.Status)
+				</dt> *@
+				<dd class="col-lg-8 col-md-8 col-12">
+					@if (Model.Status == StaticDetails.STATUS_VALID)
+					{
+						<img src="~/images/Valid.png" style="height:60px;" alt="@Model.Status" />
+					}
+					else
+					{
+						<img src="~/images/Invalid.png" style="height:60px;" alt="@Model.Status" />
+					}
+				</dd>
+
+			</dl>
+		</div>
+		<div class="row">
+			<a class="btn btn-warning col-md-3 col-12 mb-1 ms-1" asp-action="Edit" asp-route-id="@Model?.CategoryId">Edit</a>
+			<a class="btn btn-danger col-md-3 col-12 mb-1 ms-1" onclick="Delete('/admin/category/delete/@Model?.CategoryId')">Delete</a>
+			<a class="btn btn-dark col-md-3 col-12 mb-1 ms-1" asp-action="Index">Back to List</a>
+		</div>
+
+	</div>
+</div>
+
+@section Scripts {
+	<script>
+
+		function Delete(url) {
+			Swal.fire({
+				title: "Are you sure?",
+				text: "You won't be able to revert this!",
+				icon: "warning",
+				showCancelButton: true,
+				confirmButtonColor: "#3085d6",
+				cancelButtonColor: "#d33",
+				confirmButtonText: "Proceed Delete"
+			}).then((result) => {
+				if (result.isConfirmed) {
+					$.ajax({
+						url: url,
+						type: 'DELETE',
+						success: function (data) {
+							Swal.fire({
+								title: "Deleted!",
+								text: "Category has been deleted.",
+								icon: "success",
+								showConfirmButton: false,
+								timer: 1500
+							}).then(() => {
+								window.location.href = "/admin/category/index";
+							});
+						}
+					})
+				}
+			});
+		}
+	</script>
+}

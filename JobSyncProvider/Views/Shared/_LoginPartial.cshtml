@@ -1,0 +1,80 @@
+﻿@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+<ul class="navbar-nav">
+	@if (SignInManager.IsSignedIn(User))
+	{
+		<li class="nav-item">
+			<a href="#" id="notificationBell" class="nav-link">
+				<i class="fas fa-bell"></i>
+				<span class="badge badge-danger" id="notificationCount" style="display:none;">0</span>
+			</a>
+		</li>
+		<li class="nav-item dropdown">
+			<a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false" title="Manage">Hello <strong>@UserManager.GetUserName(User)</strong>!</a>
+			<ul class="dropdown-menu">
+				<li class="nav-item">
+					<a class="dropdown-item" asp-area="Identity" asp-page="/Account/Manage/Index">Account Settings</a>
+				</li>
+
+				@* Employers *@
+				@if (User.IsInRole(StaticDetails.ROLE_EMPLOYER))
+				{
+					<li class="nav-item">
+						<a class="dropdown-item text-dark" asp-area="Employer" asp-controller="Company" asp-action="Create">Company Profile</a>
+					</li>
+				}
+
+				<li>
+					<div class="dropdown-divider"></div>
+				</li>
+				<li class="nav-item">
+					<form id="logoutForm" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "Guest" })">
+						<button id="logout" type="submit" class="dropdown-item btn btn-link text-dark border-0">Logout</button>
+					</form>
+				</li>
+			</ul>
+		</li>
+	}
+	else
+	{
+		<li class="nav-item">
+			<a class="nav-link text-dark" id="register" asp-area="Identity" asp-page="/Account/Register">Register</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link text-dark" id="login" asp-area="Identity" asp-page="/Account/Login">Login</a>
+		</li>
+	}
+</ul>
+
+<!-- Add this JavaScript for logout confirmation -->
+<script>
+	document.addEventListener("DOMContentLoaded", function () {
+		// Ensure the logout button exists before attaching the event listener
+		const logoutButton = document.getElementById("logout");
+		if (logoutButton) {
+			logoutButton.addEventListener("click", function (event) {
+				event.preventDefault(); // Prevent the form from being submitted immediately
+
+				// Show the SweetAlert confirmation dialog
+				Swal.fire({
+					title: 'Are you sure?',
+					text: "You are about to log out!",
+					icon: 'warning',
+					showCancelButton: true,
+					confirmButtonText: 'Proceed Logout',
+					cancelButtonText: 'No, Cancel',
+					confirmButtonColor: '#d33',
+					cancelButtonColor: '#3085d6'
+				}).then((result) => {
+					if (result.isConfirmed) {
+						// If user confirms, submit the logout form
+						document.getElementById("logoutForm").submit();
+					}
+				});
+			});
+		}
+	});
+</script>

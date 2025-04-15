@@ -1,0 +1,74 @@
+﻿@using JobSyncProvider.Utilities
+@model JobSyncProvider.Models.Company
+
+@{
+	ViewData["Title"] = "Company Details";
+}
+
+<div class="container my-2">
+	<div class="card p-3 rounded border shadow">
+		<h1>Company Profile</h1>
+		<h2>Profile Details</h2>
+
+		<br />
+		<hr />
+
+		<div class="row flex-row-reverse">
+			<div class="col-12 col-lg-8">
+				<dl class="row">
+					<dt class="col-sm-3">
+						@Html.DisplayNameFor(model => model.Name)
+					</dt>
+					<dd class="col-sm-9">
+						@Html.DisplayFor(model => model.Name)
+					</dd>
+					<dt class="col-sm-3">
+						@Html.DisplayNameFor(model => model.Website)
+					</dt>
+					<dd class="col-sm-9">
+						@Html.DisplayFor(model => model.Website)
+					</dd>
+					<dt class="col-sm-3">
+						@Html.DisplayNameFor(model => model.Location)
+					</dt>
+					<dd class="col-sm-9">
+						@Html.DisplayFor(model => model.Location)
+					</dd>
+					<dt class="col-sm-3">
+						@Html.DisplayNameFor(model => model.Description)
+					</dt>
+					<dd class="col-sm-9">
+						@Html.DisplayFor(model => model.Description)
+					</dd>
+				</dl>
+			</div>
+
+			<div class="col-12 col-lg-4">
+				<div class="form-group">
+					@if (Model.LogoUrl != null)
+					{
+						<img id="image-preview" src="@Model.LogoUrl" class="card-img-top rounded border-5 w-100" alt="No Posted Logo" />
+					}
+					else
+					{
+						<img id="image-preview" src="https://placehold.co/500x400/png" class="card-img-top rounded border-5 w-100" alt="Company Logo" />
+					}
+				</div>
+				<!-- Edit / BackToList Buttons -->
+				<div class="form-group mt-4 mb-3">
+					<a asp-action="Edit" asp-route-id="@Model?.CompanyId" class="btn btn-warning col-md-4 col-lg-5 col-12 mb-1 ms-1">Edit</a>
+					@if (User.IsInRole(StaticDetails.ROLE_ADMIN))
+					{
+						<a asp-action="Index" class="btn btn-dark col-md-4 col-lg-5 col-12 mb-1 ms-1">Back to List</a>
+					}
+					else
+					{
+						<a asp-area="Guest" asp-controller="Home" asp-action="Index" class="btn btn-dark col-md-5 col-lg-6 col-12 mb-1 ms-1">Home</a>
+					}
+				</div>
+			</div>
+
+		</div>
+
+	</div>
+</div>

@@ -1,0 +1,87 @@
+html {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin-bottom: 60px;
+    background-color: #F1F0E9;
+}
+
+.animated-container {
+    animation: fadeInUp 1s ease-in-out;
+}
+
+.card {
+    background-color: #E3FDFD;
+}
+
+/* Login Page */
+
+.social-login {
+    margin: 20px 0;
+}
+
+    .social-login button {
+        width: 100%;
+        padding: 12px;
+        margin: 8px 0;
+        font-size: 16px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        cursor: pointer;
+    }
+
+.google-login {
+    color: black;
+}
+
+    .google-login:hover {
+        background-color: #db4437;
+        color: white;
+    }
+
+.facebook-login {
+    color: black;
+}
+
+    .facebook-login:hover {
+        background-color: #4267B2;
+        color: white;
+    }
+
+.linkedin-login {
+    color: black;
+}
+
+    .linkedin-login:hover {
+        background-color: #0A66C2;
+        color: white;
+    }
+
+/* Keyframe Animations */
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(20px); /* Starts slightly lower */
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0); /* Ends in original position */
+    }
+}

@@ -1,0 +1,132 @@
+﻿@model JobSyncProvider.ViewModels.HomeVM
+@{
+	ViewData["Title"] = "Home Page";
+}
+
+<div class="container">
+	<!-- Header Section -->
+	<div class="d-flex justify-content-center align-content-center">
+		<header class="header-section text-center">
+			<h1>Welcome to Our Job Portal</h1>
+			<p>Find the best job opportunities that match your skills.</p>
+		</header>
+	</div>
+
+	<!-- Job Search Section -->
+	<section class="search-section card p-4 shadow-sm rounded-lg mb-2">
+		<h2 class="h4 mb-4 text-center">Search for Jobs</h2>
+		<form method="get" action="/Jobs/Search" class="job-search-form">
+			<div class="row g-3">
+				<!-- Job Title or Skill -->
+				<div class="col-md-4 col-12">
+					<input type="text" name="query" placeholder="Search for a job title or skill..." class="form-control" />
+				</div>
+
+
+				<!-- Job Category -->
+				<div class="col-md-3 col-12">
+					<select name="category" class="form-select" asp-items="@Model.Categories">
+						<option value="">All Categories</option>
+					</select>
+				</div>
+
+				<!-- Job Location -->
+				<div class="col-md-3 col-12">
+					<input type="text" name="location" placeholder="Enter Location..." class="form-control" />
+				</div>
+
+
+				<!-- Work Types -->
+				<div class="col-md-2 col-12">
+					<select name="experienceLevel" class="form-select">
+						<option value="">All Work Types</option>
+						<option value="Full Time">Full Time</option>
+						<option value="Part Time">Part Time</option>
+						<option value="Contract">Contract</option>
+						<option value="Casual">Casual</option>
+					</select>
+				</div>
+
+			</div>
+
+			<!-- Collapsible Filters -->
+			<div class="mt-4">
+				<div class="collapse mt-4" id="advancedFilters">
+					<div class="row g-3">
+
+						<!-- Remote Options -->
+						<div class="col-md-3 col-12">
+							<select name="experienceLevel" class="form-select">
+								<option value="">All Remote Options</option>
+								<option value="On-Site">On-Site</option>
+								<option value="Hybrid">Hybrid</option>
+								<option value="Remote">Remote</option>
+
+							</select>
+						</div>
+
+						<!-- Salary Range -->
+						<div class="col-md-3 col-12">
+							<input type="number" name="minSalary" placeholder="Min Salary" class="form-control" />
+						</div>
+						<div class="col-md-3 col-12">
+							<input type="number" name="maxSalary" placeholder="Max Salary" class="form-control" />
+						</div>
+
+						<!-- Date Posted -->
+						<div class="col-md-3 col-12">
+							<select name="datePosted" class="form-select">
+								<option value="">All Listed Jobs</option>
+								<option value="Last 24 Hours">Last 24 Hours</option>
+								<option value="Last 7 Days">Last 7 Days</option>
+								<option value="Last 30 Days">Last 30 Days</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Search Button (Inline if Filters are Hidden, Bottom if Filters are Expanded) -->
+			<div class="d-flex justify-content-between align-items-center mt-4">
+				<div class="d-flex flex-column flex-md-row w-100">
+					<button class="btn btn-link text-decoration-none col-12 col-md-4 mb-2" type="button" data-bs-toggle="collapse" data-bs-target="#advancedFilters" aria-expanded="false" aria-controls="advancedFilters">
+						<strong>Show Advanced Filters</strong>
+					</button>
+					<button type="submit" class="btn btn-primary col-12 col-md-4 ms-auto w-md-auto py-2 shadow-sm">Search</button>
+				</div>
+			</div>
+		</form>
+	</section>
+
+	<!-- Job Listings Section / Search Results  -->
+	<section class="job-listings-section">
+		<h3 class="h4 mb-4">Available Job Listings</h3>
+		<div class="row g-4">
+			@*         @if (Model != null && Model.Jobs != null && Model.Jobs.Any())
+			{
+			@foreach (var job in Model.Jobs)
+			{
+			<div class="col-md-4 col-12">
+			<div class="card shadow-sm rounded-lg h-100">
+			<div class="card-body">
+			<h5 class="card-title text-primary">@job.Title</h5>
+			<p class="card-text"><strong>Company:</strong> @job.Company</p>
+			<p class="card-text"><strong>Location:</strong> @job.Location</p>
+			<p class="card-text"><strong>Category:</strong> @job.Category</p>
+			<p class="card-text"><strong>Type:</strong> @job.JobType</p>
+			<p class="card-text"><strong>Salary:</strong> @job.SalaryRange</p>
+			<a href="@Url.Action("Details", "Jobs", new { id = job.Id })" class="btn btn-secondary w-100">View Details</a>
+			</div>
+			</div>
+			</div>
+			}
+			}
+			else
+			{ *@
+			<div class="col-12">
+				<p class="text-danger text-center">No jobs available matching your criteria.</p>
+			</div>
+			<!--           } -->
+		</div>
+	</section>
+</div>

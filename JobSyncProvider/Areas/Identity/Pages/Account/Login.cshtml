@@ -1,0 +1,211 @@
+﻿@page
+@model LoginModel
+
+@{
+	ViewData["Title"] = "Log in";
+}
+
+<style>
+	.line-container {
+		display: flex;
+		align-items: center;
+		text-align: center;
+		width: 100%;
+	}
+
+	.line {
+		flex-grow: 1;
+		border-top: 1px solid #000; /* Add a solid black line */
+	}
+
+	.text {
+		padding: 0 10px; /* Adds space between the line and the text */
+		font-weight: bold;
+	}
+
+	/* Image container adjustment */
+	.image-container {
+		/* background-color: red; */
+		width: 100%;
+		/* height: auto; */
+
+		position: relative;
+		overflow: hidden;
+	}
+
+		.image-container img {
+			width: 100%;
+			object-fit: cover;
+			border-radius: 0 30px 30px 0;
+			height: 70vh;
+			filter: blur(2px);
+		}
+
+	.overlay-caption {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		text-align: center;
+		color: white;
+		z-index: 2; /* Ensure it's above the image */
+	}
+
+	.caption-text {
+		font-size: 2rem; /* Adjust based on your design */
+		font-weight: bold;
+		background-color: rgba(0, 0, 0, 0.5); /* Optional, adds a background behind text */
+		padding: 10px;
+		border-radius: 5px;
+	}
+
+	#togglePassword {
+		background-color: transparent;
+		border: none;
+		padding: 0;
+		cursor: pointer;
+	}
+
+		#togglePassword:hover {
+			color: #007bff; /* Change the color on hover */
+		}
+
+	#togglePasswordIcon {
+		font-size: 1.2rem; /* Adjust the icon size */
+	}
+</style>
+
+
+<div class="container">
+	<div class="card rounded-5 border shadow">
+
+		<div class="row">
+
+			@* Left Side Login Details *@
+			<div class="col-md-4 p-4">
+				<section>
+					<form id="account" method="post">
+						<h4 class="text-center">Use a local account to Sign in.</h4>
+						<hr />
+						<div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+						<div class="form-floating mb-3">
+							<input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" autofocus/>
+							<label asp-for="Input.Email" class="form-label">Email</label>
+							<span asp-validation-for="Input.Email" class="text-danger"></span>
+						</div>
+						<div class="form-floating mb-3">
+							<input id="passwordInput"  asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" placeholder="password" />
+							<label asp-for="Input.Password" class="form-label">Password</label>
+							<button type="button" id="togglePassword" class="position-absolute" 
+							style="top: 50%; right: 10px; transform: translateY(-50%); z-index: 2;">
+								<i id="togglePasswordIcon" class="bi bi-eye-slash"></i>
+							</button>
+							<span asp-validation-for="Input.Password" class="text-danger"></span>
+						</div>
+						<div class="checkbox mb-3 w-100 d-flex justify-content-between">
+							<label asp-for="Input.RememberMe" class="form-label">
+								<input class="form-check-input" asp-for="Input.RememberMe" />
+								@Html.DisplayNameFor(m => m.Input.RememberMe)
+							</label>
+							<a id="forgot-password" class="ms-auto" asp-page="./ForgotPassword">Forgot password?</a>
+						</div>
+						<div>
+							<button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Log in</button>
+						</div>
+						<div class="mt-3">
+							<p>
+								Don't have an Account?
+								<a asp-area="Identity" asp-page="/Account/Register">Sign-up Now</a>
+							</p>
+							<p>
+								<a id="resend-confirmation" asp-page="./ResendEmailConfirmation">Resend email confirmation</a>
+							</p>
+						</div>
+
+					</form>
+				</section>
+
+				<section>
+
+					<div class="line-container mt-2">
+						<div class="line"></div>
+						<div class="text">Or</div>
+						<div class="line"></div>
+					</div>
+
+					<h4 class="text-center mt-4">Use Social Media.</h4>
+					@{
+						if ((Model.ExternalLogins?.Count ?? 0) == 0)
+						{
+							// <div>
+							// 	<p>
+							// 		There are no external authentication services configured. See this <a href="https://go.microsoft.com/fwlink/?LinkID=532715">
+							// 			article
+							// 			about setting up this ASP.NET application to support logging in via external services
+							// 		</a>.
+							// 	</p>
+							// </div>
+
+							<div class="social-login">
+								<a class="btn google-login"><img src="~/images/Icons/Google.png" height="20px" /><strong> Google</strong> </a>
+								<a class="btn facebook-login"> <img src="~/images/Icons/Facebook.png" height="20px" /><strong> Facebook</strong> </a>
+								<a class="btn linkedin-login"> <img src="~/images/Icons/Linkedin.png" height="20px" /><strong> LinkedIn</strong> </a>
+							</div>
+						}
+						else
+						{
+							<form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
+								<div>
+									<p>
+										@foreach (var provider in Model.ExternalLogins!)
+										{
+											<button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
+										}
+									</p>
+								</div>
+							</form>
+						}
+					}
+				</section>
+			</div>
+			@* Image on the right Column *@
+			<div class="col-md-8">
+				<div class="image-container">
+					<img src="~/images/Background/Building.jpg" alt="Building" />
+					<!-- Overlay Text -->
+					<div class="overlay-caption">
+						<h1 class="caption-text" style="color:yellow;">Welcome to JobSyncProvider</h1>
+						<h2 class="caption-text">Let’s Get You Hired!</h2>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+
+	</div>
+</div>
+
+
+@section Scripts {
+	<partial name="_ValidationScriptsPartial" />
+
+	<script>
+		// Get elements
+		const passwordInput = document.getElementById('passwordInput');
+		const togglePassword = document.getElementById('togglePassword');
+		const togglePasswordIcon = document.getElementById('togglePasswordIcon');
+
+		// Toggle password visibility
+		togglePassword.addEventListener('click', function () {
+			// Toggle the input type between 'password' and 'text'
+			const type = passwordInput.type === 'password' ? 'text' : 'password';
+			passwordInput.type = type;
+
+			// Toggle the icon between 'eye' and 'eye-slash'
+			togglePasswordIcon.classList.toggle('bi-eye');
+			togglePasswordIcon.classList.toggle('bi-eye-slash');
+		});
+
+	</script>
+}

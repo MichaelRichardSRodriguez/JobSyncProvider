@@ -1,0 +1,77 @@
+﻿@model IEnumerable<JobSyncProvider.Models.JobPost>
+
+@{
+    ViewData["Title"] = "Job Posts";
+}
+
+
+<div class="container">
+	<div class="card p-3 rounded border shadow">
+
+		<h1>Job Posts</h1>
+
+		<div class="d-flex justify-content-between align-items-center">
+			<!-- Create Button -->
+			<p class="mb-0">
+				<a class="btn btn-primary d-inline-block" asp-action="Create">Create New</a>
+			</p>
+
+			<!-- Filter dropdown for status -->
+			<div>
+				<label for="statusFilter" class="mr-5">Filter Status:</label>
+				<select id="statusFilter" class="form-select d-inline-block" style="width:195px; cursor:pointer;">
+					<option value="All">All</option>
+					<option value="Valid">Valid</option>
+					<option value="Invalid">Invalid</option>
+				</select>
+			</div>
+
+		</div>
+
+		<table id="tblData" class="table table-hover">
+			<thead>
+				<tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Title)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.JobStatus)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Category)
+                    </th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				<!-- Using Datatable / jQuery -->
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Title)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.JobStatus)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Category.Name)
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.JobPostId">Edit</a> |
+                            <a asp-action="Details" asp-route-id="@item.JobPostId">Details</a> |
+                            <a asp-action="Delete" asp-route-id="@item.JobPostId">Delete</a>
+                        </td>
+                    </tr>
+                }
+
+			</tbody>
+		</table>
+	</div>
+</div>
+
+@* @section Scripts {
+
+	<script src="~/js/category.js"></script>
+
+} *@

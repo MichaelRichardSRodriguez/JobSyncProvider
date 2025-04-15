@@ -1,0 +1,40 @@
+﻿@model JobSyncProvider.Models.Category
+
+@{
+	ViewData["Title"] = "Edit Category";
+}
+
+<div class="container col-lg-7 col-md-10 col-sm-12">
+	<div class="card p-3 rounded border shadow">
+
+		<h1>Edit</h1>
+
+		<h4>Category</h4>
+		<hr />
+		<div class="row">
+			<div>
+				<form asp-action="Edit">
+					<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+					<input type="hidden" asp-for="CategoryId" />
+					<div class="form-floating mb-3">
+						<input id="name" asp-for="Name" class="form-control" placeholder="Category Name" autofocus />
+						<label asp-for="Name">Name</label>
+						<span asp-validation-for="Name" class="text-danger"></span>
+					</div>
+
+					<div class="form-group mt-4 mb-3">
+						<input type="submit" value="Submit" class="btn btn-success" />
+						<a class="btn btn-dark" asp-action="Index">Back to List</a>
+					</div>
+				</form>
+			</div>
+		</div>
+
+	</div>
+</div>
+
+@section Scripts {
+	@{
+		await Html.RenderPartialAsync("_ValidationScriptsPartial");
+	}
+}

@@ -1,0 +1,55 @@
+﻿@using JobSyncProvider.Utilities
+@model JobSyncProvider.ViewModels.UserVM
+
+@{
+	ViewData["Title"] = "Role Management";
+}
+
+<div class="container my-5 col-lg-6 col-md-8 col-12">
+	<div class="card p-3 rounded border shadow">
+		<h1>Role Management</h1>
+		<hr />
+
+		<form method="post">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<div>
+				<dl class="row">
+					<dt class="col-md-3">
+						@Html.DisplayNameFor(model => model.FullName)
+					</dt>
+					<dd class="col-md-9">
+@* 						<label asp-for="FullName" class="form-control">
+							@Html.DisplayFor(model => model.FullName)
+						</label> *@
+						<input asp-for="FullName" class="form-control" placeholder="Full Name" readonly>
+					</dd>
+					<dt class="col-md-3">
+						@Html.DisplayNameFor(model => model.Email)
+					</dt>
+					<dd class="col-md-9">
+@* 						<label asp-for="Email" class="form-control">
+							@Html.DisplayFor(model => model.Email)
+						</label> *@
+						<input asp-for="Email" class="form-control" placeholder="Email Address" readonly>
+					</dd>
+					<dt class="col-md-3 align-items-center">
+						@Html.DisplayNameFor(model => model.Role)
+					</dt>
+					<dd class="col-md-9 align-items-center">
+						<select asp-for="Role" class="form-select" asp-items="@Model.RoleList">
+						</select>
+					</dd>
+				</dl>
+			</div>
+
+
+			<!-- Edit / BackToList Buttons -->
+			<div class="form-group mt-4 mb-3">
+				<input type="submit" value="Submit" class="btn btn-success" />
+				<a asp-action="Index" class="btn btn-dark">Back to List</a>
+			</div>
+
+		</form>
+
+	</div>
+</div>
