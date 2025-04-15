@@ -12,10 +12,10 @@ namespace JobSyncProvider.DataAccess.Services
 		private readonly IUnitOfWork _unitOfWork;
 		private readonly IRepository<ApplicationUser> _userRepository;
 		private readonly RoleManager<IdentityRole> _roleManager;
-		private readonly UserManager<IdentityUser> _userManager;
+		private readonly UserManager<ApplicationUser> _userManager;
 
 		public UserService(IUnitOfWork unitOfWork,
-				UserManager<IdentityUser> userManager,
+				UserManager<ApplicationUser> userManager,
 				RoleManager<IdentityRole> roleManager)
 		{
 			_unitOfWork = unitOfWork;

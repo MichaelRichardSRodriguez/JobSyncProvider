@@ -19,10 +19,10 @@ namespace JobSyncProvider.Areas.Admin.Controllers
 	{
 
 		private readonly IUserService _userService;
-		private readonly UserManager<IdentityUser> _userManager;
+		private readonly UserManager<ApplicationUser> _userManager;
 		private readonly RoleManager<IdentityRole> _roleManager;
 
-		public UserController(IUserService userService, UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
+		public UserController(IUserService userService, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
 		{
 			_userService = userService;
 			_userManager = userManager;
